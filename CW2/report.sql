@@ -1,3 +1,4 @@
+Clear screen;
 Accept Report_file char prompt ‘Enter a file name for summary report’;
 Col Storecode format A8 heading ‘Store Code’;
 Col Description format A8 heading ‘Item Description’;
@@ -8,20 +9,20 @@ Set pause off;
 Set feedback off;
 Set space 6;
 Set newpage 2;
-Set pagesize 54;
-Set linesize 60;
+Set pagesize 30;
+Set linesize 100;
+Set wrap off;
 Set underline =;
-Ttitle center ‘Current Stock value by store’ skip 2 center – ‘prepared by ‘ &reporting_officer center - &todays_date skip 4;
+Ttitle center ‘Current Stock value by store’ skip 2 center –
+  ‘prepared by ‘ &your_name skip 2center -
+    _Date skip 2;
 Bittle center format 999 sql.pno;
-Break on storecode skip 2 on Description skip 1 on report;
-Compute sum of (price*quantity) on storecode;
-Compute sum of (price*Quantity) on report;
-Spool &report_file;
-Select Storecode, Description, price, quantity, (price*quantity)
+Break on StoreCode skip 2 on Description skip 1 on report;
+Compute sum label 'Store Total' of (Price*Quantity) on StoreCode;
+Compute sum lable 'Grand Total' of (price*Quantity) on Report;
+Select StoreCode, Description, Price, Quantity, (Price*Quantity)
 From stocks
-Order by Description;
-Spool off;
+Order by Quantity desc;
 Clear break;
 Clear columns;
 Clear computes;
-Set pause on;
