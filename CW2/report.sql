@@ -22,8 +22,7 @@ Compute sum label 'Store Total' of (Price*Quantity) on StoreCode;
 Compute sum label 'Grand Total' of (price*Quantity) on Report;
 Select StoreCode, Description, Price, Quantity, (Price*Quantity)
 From stocks
-group by StoreCode, Description, Price, Quantity
-Order by Quantity desc;
+order by StoreCode, SuppCode;
 Clear break;
 Clear columns;
 Clear computes;
